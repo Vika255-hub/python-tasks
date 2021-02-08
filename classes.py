@@ -17,8 +17,7 @@ class CAR(object):
     def run_car(self):
         if self.fuel > self.fuel_consumption:
             return self.fuel - self.fuel_consumption
-        else:
-            return Exception('No fuel')
+        raise Exception('No fuel')
 
     def add_fuel(self, value):
         return value + self.fuel
@@ -41,8 +40,7 @@ def compare_fuel():
         if car_BMV.run_car() > car_Skoda.run_car():
             return True
         return False
-    else:
-        return Exception('No fuel')
+    raise Exception('No fuel')
 
 
 if __name__ == '__main__':
