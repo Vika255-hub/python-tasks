@@ -1,9 +1,10 @@
-class CAR(object):
-    def __init__(self, doors_count=5, color='black', fuel=100, fuel_consumption=10):
-        self.doors_count = doors_count
-        self.color = color
+class CAR:
+    doors_count = 5
+    color = 'black'
+    fuel_consumption = 10
+
+    def __init__(self, fuel=100):
         self.fuel = fuel
-        self.fuel_consumption = fuel_consumption
 
     def open_doors(self):
         return True
@@ -15,34 +16,42 @@ class CAR(object):
         return self.fuel
 
     def run_car(self):
-        if self.fuel > self.fuel_consumption:
-            return self.fuel - self.fuel_consumption
-        raise Exception('No fuel')
+        if self.fuel < self.fuel_consumption:
+            raise Exception('No fuel')
+
+        self.fuel -= self.fuel_consumption
 
     def add_fuel(self, value):
-        return value + self.fuel
+        self.fuel += value
 
 
 class BMW(CAR):
-    def __init__(self, doors_count, color, fuel, fuel_consumption):
-        super().__init__(doors_count, color, fuel, fuel_consumption)
+    doors_count = 2
+    color = 'red'
+    fuel_consumption = 15
 
 
 class Skoda(CAR):
-    def __init__(self, doors_count, color, fuel, fuel_consumption):
-        super().__init__(doors_count, color, fuel, fuel_consumption)
+    doors_count = 5
+    color = 'white'
+    fuel_consumption = 8
 
 
 def compare_fuel():
-    car_BMV = BMW(2, 'red', 10, 15)
-    car_Skoda = Skoda(5, 'white', 100, 8)
-    if isinstance(car_BMV.run_car(), int) and isinstance(car_Skoda.run_car(), int):
-        if car_BMV.run_car() > car_Skoda.run_car():
-            return True
-        return False
-    raise Exception('No fuel')
+    car_bmw = BMW()
+    car_skoda = Skoda()
+
+    try:
+        car_bmw.run_car()
+        car_skoda.run_car()
+    except Exception:
+        return
+
+    if car_bmw.fuel > car_skoda.fuel:
+        return True
+
+    return False
 
 
 if __name__ == '__main__':
     print(compare_fuel())
-
