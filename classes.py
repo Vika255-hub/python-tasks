@@ -4,6 +4,7 @@ import random
 class CAR:
     doors_count = 5
     fuel_consumption = 10
+    fuel_type = 'Gas'
 
     def __init__(self, fuel=100, is_doors_open=False, color='black'):
         self.fuel = fuel
@@ -11,17 +12,17 @@ class CAR:
         self.color = color
 
     @property
-    def _fuel(self):
-        return self.fuel
+    def fuel_prop(self):
+        return self._fuel
 
     def open_doors(self):
-        if self.is_doors_open == True:
+        if self.is_doors_open:
             raise Exception('Doors Open')
 
         self.is_doors_open = True
 
     def close_doors(self):
-        if self.is_doors_open == False:
+        if self.is_doors_open:
             raise Exception('Doors Close')
 
         self.is_doors_open = False
@@ -36,6 +37,10 @@ class CAR:
         self.fuel -= self.fuel_consumption
 
     def add_fuel(self, value):
+        if self.fuel_type == 'Gas':
+            value += 2
+        elif self.fuel_type == 'Gasoline':
+            value += 1
         self.fuel += value
 
     def repaint(self, new_color):
@@ -48,6 +53,7 @@ class CAR:
 class BMW(CAR):
     doors_count = 2
     fuel_consumption = 15
+    fuel_type = 'Gasoline'
 
     def __init__(self, fuel=100, is_doors_open=False, color='red'):
         super().__init__(fuel, is_doors_open, color)
@@ -56,8 +62,18 @@ class BMW(CAR):
 class Skoda(CAR):
     doors_count = 5
     fuel_consumption = 8
+    fuel_type = 'Diesel'
 
     def __init__(self, fuel=100, is_doors_open=False, color='white'):
+        super().__init__(fuel, is_doors_open, color)
+
+
+class Reno(CAR):
+    doors_count = 5
+    fuel_consumption = 9
+    fuel_type = 'Gas'
+
+    def __init__(self, fuel=100, is_doors_open=False, color='green'):
         super().__init__(fuel, is_doors_open, color)
 
 
@@ -77,19 +93,21 @@ def compare_fuel():
     return False
 
 
-def random_repaint():
-    car_bmw = BMW()
+def random_repaint(car: CAR):
     new_color = random.choice(['black', 'white', 'red', 'yellow', 'blue', 'green', 'purple'])
 
     try:
-        car_bmw.repaint(new_color)
+        car.repaint(new_color)
     except Exception:
         return 'Equal color'
 
-    return car_bmw.color
+    return car.color
 
 
 if __name__ == '__main__':
     print(compare_fuel())
-    print(random_repaint())
+    print(random_repaint(car=BMW()))
+
+
+
 
