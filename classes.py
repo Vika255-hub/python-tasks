@@ -6,13 +6,13 @@ class CAR:
     fuel_consumption = 10
     fuel_type = 'Gas'
 
-    def __init__(self, fuel=100, is_doors_open=False, color='black'):
-        self.fuel = fuel
-        self.is_doors_open = is_doors_open
+    def __init__(self, fuel=100, color='black'):
+        self._fuel = fuel
         self.color = color
+        self.is_doors_open = False
 
     @property
-    def fuel_prop(self):
+    def fuel(self):
         return self._fuel
 
     def open_doors(self):
@@ -22,7 +22,7 @@ class CAR:
         self.is_doors_open = True
 
     def close_doors(self):
-        if self.is_doors_open:
+        if not self.is_doors_open:
             raise Exception('Doors Close')
 
         self.is_doors_open = False
@@ -34,14 +34,14 @@ class CAR:
         if self.fuel < self.fuel_consumption:
             raise Exception('No fuel')
 
-        self.fuel -= self.fuel_consumption
+        self._fuel -= self.fuel_consumption
 
     def add_fuel(self, value):
         if self.fuel_type == 'Gas':
             value += 2
         elif self.fuel_type == 'Gasoline':
             value += 1
-        self.fuel += value
+        self._fuel += value
 
     def repaint(self, new_color):
         if self.color == new_color:
@@ -55,8 +55,8 @@ class BMW(CAR):
     fuel_consumption = 15
     fuel_type = 'Gasoline'
 
-    def __init__(self, fuel=100, is_doors_open=False, color='red'):
-        super().__init__(fuel, is_doors_open, color)
+    def __init__(self, fuel=100, color='red'):
+        super().__init__(fuel, color)
 
 
 class Skoda(CAR):
@@ -64,17 +64,16 @@ class Skoda(CAR):
     fuel_consumption = 8
     fuel_type = 'Diesel'
 
-    def __init__(self, fuel=100, is_doors_open=False, color='white'):
-        super().__init__(fuel, is_doors_open, color)
+    def __init__(self, fuel=100, color='white'):
+        super().__init__(fuel, color)
 
 
 class Reno(CAR):
     doors_count = 5
     fuel_consumption = 9
-    fuel_type = 'Gas'
 
-    def __init__(self, fuel=100, is_doors_open=False, color='green'):
-        super().__init__(fuel, is_doors_open, color)
+    def __init__(self, fuel=100, color='green'):
+        super().__init__(fuel, color)
 
 
 def compare_fuel():
@@ -94,12 +93,14 @@ def compare_fuel():
 
 
 def random_repaint(car: CAR):
-    new_color = random.choice(['black', 'white', 'red', 'yellow', 'blue', 'green', 'purple'])
+    new_color = random.choice(
+        ['black', 'white', 'red', 'yellow', 'blue', 'green', 'purple']
+    )
 
     try:
         car.repaint(new_color)
     except Exception:
-        return 'Equal color'
+        pass
 
     return car.color
 
