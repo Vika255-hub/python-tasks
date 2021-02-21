@@ -49,6 +49,13 @@ class CAR:
 
         self.color = new_color
 
+    def get_property(self):
+        car_property = {
+            'fuel_type': self.fuel_type, 'doors_count': self.doors_count,
+            'is_doors_open': self.is_doors_open, 'fuel': self._fuel, 'fuel_consumption': self.fuel_consumption
+        }
+        return car_property
+
 
 class BMW(CAR):
     doors_count = 2
@@ -76,22 +83,6 @@ class Reno(CAR):
         super().__init__(fuel, color)
 
 
-def compare_fuel():
-    car_bmw = BMW()
-    car_skoda = Skoda()
-
-    try:
-        car_bmw.run_car()
-        car_skoda.run_car()
-    except Exception:
-        return
-
-    if car_bmw.fuel > car_skoda.fuel:
-        return True
-
-    return False
-
-
 def random_repaint(car: CAR):
     new_color = random.choice(
         ['black', 'white', 'red', 'yellow', 'blue', 'green', 'purple']
@@ -105,10 +96,42 @@ def random_repaint(car: CAR):
     return car.color
 
 
+def compare_count_fuel():
+
+    try:
+
+        def run_c(car: CAR):
+            run_count = 2
+            while run_count > 0:
+                car.run_car()
+                run_count = run_count - 1
+            return car.fuel
+
+    except Exception:
+        return
+
+    if run_c(car=BMW()) > run_c(car=Reno()) and run_c(car=Reno()) < run_c(car=Skoda()):
+        return 'Reno has the least fuel'
+    elif run_c(car=Reno()) > run_c(car=BMW()) and run_c(car=BMW()) < run_c(car=Skoda()):
+        return 'BMW has the least fuel'
+    return 'Skoda has the least fuel'
+
+
+def get_open_doors_and_property():
+    car_bmw = BMW()
+    car_skoda = Skoda()
+    car_reno = Reno()
+
+#    rand_car = random.choice(car_bmw, car_skoda, car_reno)
+#    rand_car. open_doors
+
+    return f'BMW: {car_bmw.get_property()}' '\n' f'Skoda: {car_skoda.get_property()}' \
+           '\n' f'Reno: {car_reno.get_property()}'
+
+
 if __name__ == '__main__':
-    print(compare_fuel())
     print(random_repaint(car=BMW()))
-
-
+    print(compare_count_fuel())
+    print(get_open_doors_and_property())
 
 
