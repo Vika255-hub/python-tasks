@@ -49,10 +49,13 @@ class CAR:
 
         self.color = new_color
 
-    def get_property(self):
+    def get_properties(self):
         car_property = {
-            'fuel_type': self.fuel_type, 'doors_count': self.doors_count,
-            'is_doors_open': self.is_doors_open, 'fuel': self._fuel, 'fuel_consumption': self.fuel_consumption
+            'fuel_type': self.fuel_type,
+            'doors_count': self.doors_count,
+            'is_doors_open': self.is_doors_open,
+            'fuel': self.fuel,
+            'fuel_consumption': self.fuel_consumption,
         }
         return car_property
 
@@ -96,23 +99,25 @@ def random_repaint(car: CAR):
     return car.color
 
 
-def compare_count_fuel():
-
+def run_c(car_class, run_count):
+    car = car_class()
     try:
-
-        def run_c(car: CAR):
-            run_count = 2
-            while run_count > 0:
-                car.run_car()
-                run_count = run_count - 1
-            return car.fuel
-
+        while run_count > 0:
+            car.run_car()
+            run_count = run_count - 1
     except Exception:
-        return
+        return 0
 
-    if run_c(car=BMW()) > run_c(car=Reno()) and run_c(car=Reno()) < run_c(car=Skoda()):
+    return car.fuel
+
+
+def compare_count_fuel(run_count):
+
+    bmw = run_c(BMW, run_count)
+
+    if bmw > run_c(car=Reno()) and run_c(car=Reno()) < run_c(car=Skoda()):
         return 'Reno has the least fuel'
-    elif run_c(car=Reno()) > run_c(car=BMW()) and run_c(car=BMW()) < run_c(car=Skoda()):
+    elif run_c(car=Reno()) > bmw and bmw < run_c(car=Skoda()):
         return 'BMW has the least fuel'
     return 'Skoda has the least fuel'
 
