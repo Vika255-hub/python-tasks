@@ -114,10 +114,12 @@ def run_c(car_class, run_count):
 def compare_count_fuel(run_count):
 
     bmw = run_c(BMW, run_count)
+    skoda = run_c(Skoda, run_count)
+    reno = run_c(Reno, run_count)
 
-    if bmw > run_c(car=Reno()) and run_c(car=Reno()) < run_c(car=Skoda()):
+    if bmw > reno and reno < skoda:
         return 'Reno has the least fuel'
-    elif run_c(car=Reno()) > bmw and bmw < run_c(car=Skoda()):
+    elif reno > bmw and bmw < skoda:
         return 'BMW has the least fuel'
     return 'Skoda has the least fuel'
 
@@ -127,16 +129,23 @@ def get_open_doors_and_property():
     car_skoda = Skoda()
     car_reno = Reno()
 
-#    rand_car = random.choice(car_bmw, car_skoda, car_reno)
-#    rand_car. open_doors
+    try:
+        def rand_open_doors():
+            rand_car = random.choice([car_bmw, car_skoda, car_reno])
+            rand_car.open_doors()
 
-    return f'BMW: {car_bmw.get_property()}' '\n' f'Skoda: {car_skoda.get_property()}' \
-           '\n' f'Reno: {car_reno.get_property()}'
+        [rand_open_doors() for i in range(2)]
+
+    except Exception:
+        return
+
+    return f'BMW: {car_bmw.get_properties()}' '\n' f'Skoda: {car_skoda.get_properties()}' \
+           '\n' f'Reno: {car_reno.get_properties()}'
 
 
 if __name__ == '__main__':
     print(random_repaint(car=BMW()))
-    print(compare_count_fuel())
+    print(compare_count_fuel(1))
     print(get_open_doors_and_property())
 
 
